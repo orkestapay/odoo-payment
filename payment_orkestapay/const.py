@@ -50,15 +50,24 @@ LOCALE_SPANISH = 'ES_LATAM'
 LOCALE_DEFAULT = 'EN_US'
 
 # Mapping of OrkestaPay order statuses (`OrderDetail.status`) to Odoo transaction states.
+# A paid order becomes (PARTIALLY_)REFUNDED after a refund: the payment did happen, and the
+# refunds are reconciled on their own transactions.
 ORDER_STATUS_MAPPING = {
     'pending': ('CREATED', 'PROCESSING_PAYMENT', 'PAYMENT_ACTION_REQUIRED', 'PARTIALLY_PAID'),
-    'done': ('COMPLETED',),
+    'done': ('COMPLETED', 'REFUNDED', 'PARTIALLY_REFUNDED'),
     'cancel': ('CANCELED', 'EXPIRED'),
     'error': ('FAILED',),
 }
 
 # Order statuses after which the order can no longer be paid or canceled.
-ORDER_FINAL_STATUSES = ('COMPLETED', 'CANCELED', 'EXPIRED', 'FAILED')
+ORDER_FINAL_STATUSES = (
+    'COMPLETED',
+    'REFUNDED',
+    'PARTIALLY_REFUNDED',
+    'CANCELED',
+    'EXPIRED',
+    'FAILED',
+)
 
 # Payment statuses (`PaymentResponse.status`).
 PAYMENT_STATUS_COMPLETED = 'COMPLETED'

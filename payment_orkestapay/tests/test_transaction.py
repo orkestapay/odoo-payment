@@ -475,8 +475,17 @@ class TestStateMapping(OrkestaPayCommon):
             tx._orkestapay_process_from_api('return')
 
     def test_order_status_mapping(self):
+        # Status of the order's payment, for the order statuses that come with one.
+        payment_status_of = {
+            'COMPLETED': 'COMPLETED',
+            'REFUNDED': 'REFUNDED',
+            'PARTIALLY_REFUNDED': 'PARTIALLY_REFUNDED',
+            'FAILED': 'REJECTED',
+        }
         for order_status, expected_state in (
             ('COMPLETED', 'done'),
+            ('REFUNDED', 'done'),
+            ('PARTIALLY_REFUNDED', 'done'),
             ('CREATED', 'pending'),
             ('PROCESSING_PAYMENT', 'pending'),
             ('PAYMENT_ACTION_REQUIRED', 'pending'),
@@ -492,9 +501,9 @@ class TestStateMapping(OrkestaPayCommon):
                 self._process_with_api(
                     tx, order_status=order_status, reference=tx.reference,
                     payments=[self._payment_response(
-                        'REJECTED' if order_status == 'FAILED' else 'COMPLETED',
-                        captured=self.amount, message='Insufficient funds',
-                    )] if order_status in ('COMPLETED', 'FAILED') else [],
+                        payment_status_of[order_status], captured=self.amount,
+                        message='Insufficient funds' if order_status == 'FAILED' else 'Approved',
+                    )] if order_status in payment_status_of else [],
                 )
                 self.assertEqual(tx.state, expected_state)
                 if order_status == 'FAILED':
@@ -646,6 +655,21 @@ class TestBuyerCancellation(OrkestaPayCommon):
         with self._mock_api(routes):
             tx._orkestapay_cancel_from_buyer()
         self.assertEqual(tx.state, 'pending')
+
+    def test_cancel_of_a_refunded_order_marks_it_paid(self):
+        """Paid, then refunded in the portal before Odoo knew about the payment."""
+        for status in ('REFUNDED', 'PARTIALLY_REFUNDED'):
+            with self.subTest(status=status):
+                tx = self._create_orkestapay_transaction(reference=f'{self.reference}-{status}')
+                # `captured` stays the gross amount after a refund (seen in sandbox).
+                routes = self._verification_routes(
+                    status, reference=tx.reference,
+                    payments=[self._payment_response(status, captured=self.amount)],
+                )
+                with self._mock_api(routes) as calls:
+                    tx._orkestapay_cancel_from_buyer()
+                self.assertEqual(tx.state, 'done')
+                self.assertFalse([c for c in calls if c[1].endswith('/cancel')])
 
     def test_cancel_of_an_expired_order_does_not_call_cancel(self):
         tx = self._create_orkestapay_transaction()
