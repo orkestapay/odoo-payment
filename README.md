@@ -106,7 +106,8 @@ Para empezar de cero: `docker compose down -v` (borra las bases y el filestore l
 
 | Caso | Tarjeta |
 |---|---|
-| Aprobada | `4242 4242 4242 4242`, `4111 1111 1111 1111` |
+| Aprobada | `4111 1111 1111 1111` |
+| Rechazada | `4242 4242 4242 4242` |
 | Desafío 3DS | `4000 0000 0000 2503` (cualquier fecha futura) |
 
 ## Ramas
