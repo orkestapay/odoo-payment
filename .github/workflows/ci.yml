@@ -1,0 +1,70 @@
+name: CI
+
+on:
+  # The published 19.0 branch carries only the module, so it has no workflows.
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  pre-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: pre-commit/action@v3.0.1
+
+  tests:
+    name: tests (${{ matrix.name }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # Only the declared dependency: the sales order breakdown tests are skipped.
+          - name: payment
+            modules: payment_orkestapay
+          # The usual setup: runs the whole suite.
+          - name: website_sale
+            modules: website_sale,payment_orkestapay
+    container:
+      image: odoo:19.0
+      options: --user root
+    services:
+      db:
+        image: postgres:16
+        env:
+          POSTGRES_USER: odoo
+          POSTGRES_PASSWORD: odoo
+          POSTGRES_DB: postgres
+        options: >-
+          --health-cmd "pg_isready -U odoo -d postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      DB_HOST: db
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Install, test and uninstall
+        run: bash .github/scripts/odoo-ci.sh "${{ matrix.modules }}"
+      - name: Upload logs
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: odoo-logs-${{ matrix.name }}
+          path: "*.log"

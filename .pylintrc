@@ -1,0 +1,29 @@
+[MASTER]
+load-plugins=pylint_odoo
+score=n
+
+[ODOOLINT]
+manifest-required-authors=OrkestaPay
+manifest-required-keys=license
+license-allowed=LGPL-3
+valid-odoo-versions=19.0
+
+[MESSAGES CONTROL]
+# The Odoo-specific checks plus the pylint checks that flake8 doesn't cover. Style and
+# imports are left to flake8; checks that need Odoo importable (no-member) are left out.
+disable=all
+enable=odoolint,
+       logging-fstring-interpolation,
+       logging-format-interpolation,
+       logging-not-lazy,
+       dangerous-default-value,
+       bare-except,
+       broad-exception-caught,
+       redefined-builtin,
+       undefined-variable,
+       unused-variable,
+       unused-argument
+
+[REPORTS]
+output-format=colorized
+msg-template={path}:{line}: [{msg_id}({symbol}), {obj}] {msg}

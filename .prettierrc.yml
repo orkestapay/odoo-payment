@@ -1,0 +1,7 @@
+# Prettier is only used for XML (views, data, templates).
+printWidth: 99
+tabWidth: 4
+xmlSelfClosingSpace: false
+# `ignore` moves inline tags (<em>, <code>) inside text to their own lines, which adds
+# visible spaces: keep help texts as plain text.
+xmlWhitespaceSensitivity: ignore

@@ -1,0 +1,43 @@
+# Local development environment for payment_orkestapay (Odoo 19 + PostgreSQL 16).
+# Lives on `main` only: the published `19.0` branch must not include it.
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-odoo}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-odoo}
+      POSTGRES_DB: postgres
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-odoo} -d postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  odoo:
+    image: odoo:19.0
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "${ODOO_PORT:-8069}:8069"
+    environment:
+      HOST: db
+      USER: ${POSTGRES_USER:-odoo}
+      PASSWORD: ${POSTGRES_PASSWORD:-odoo}
+    volumes:
+      - ./payment_orkestapay:/mnt/extra-addons/payment_orkestapay
+      - odoo-data:/var/lib/odoo
+    # --proxy-mode: honor the X-Forwarded-* headers sent by ngrok.
+    # --no-database-list: disable the database manager, which ngrok would otherwise expose to the
+    # internet with the image's default master password; --db-filter picks the PoC database.
+    command:
+      - "--dev=reload,xml"
+      - "--proxy-mode"
+      - "--no-database-list"
+      - "--db-filter=^${ODOO_DB:-odoo_poc}$$"
+
+volumes:
+  db-data: {}
+  odoo-data: {}

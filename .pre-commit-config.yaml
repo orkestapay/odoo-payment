@@ -1,0 +1,49 @@
+# Static checks. Install once with `pip install pre-commit && pre-commit install`;
+# run on every file with `pre-commit run --all-files`. CI runs the same hooks.
+exclude: ^LICENSE$
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-merge-conflict
+      - id: check-xml
+      - id: check-yaml
+      - id: check-added-large-files
+      - id: debug-statements
+      - id: detect-private-key
+      - id: mixed-line-ending
+        args: [--fix=lf]
+
+  - repo: https://github.com/PyCQA/flake8
+    rev: 7.5.0
+    hooks:
+      - id: flake8
+        name: flake8
+
+  - repo: https://github.com/OCA/pylint-odoo
+    rev: v10.0.12
+    hooks:
+      - id: pylint_odoo
+        name: pylint-odoo
+        # Absolute `odoo.addons.payment_orkestapay` imports follow the core payment providers,
+        # and the Apps Store description is static/description/index.html, not a README.
+        args:
+          - --rcfile=.pylintrc
+          - --disable=odoo-addons-relative-import,missing-readme
+
+  - repo: local
+    hooks:
+      - id: prettier-xml
+        name: prettier (XML)
+        language: node
+        # Prettier 3 resolves plugins from the working directory, not from the hook's
+        # environment, so the plugin is given by its path in that environment.
+        entry: >-
+          bash -c 'prettier --write
+          --plugin="$(npm root -g)/@prettier/plugin-xml/src/plugin.js" "$@"' --
+        files: \.xml$
+        additional_dependencies:
+          - prettier@3.3.3
+          - "@prettier/plugin-xml@3.4.1"

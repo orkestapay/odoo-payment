@@ -1,0 +1,363 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* payment_orkestapay
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0-20261102\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-17 19:00+0000\n"
+"PO-Revision-Date: 2026-11-17 19:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: payment_orkestapay
+#. odoo-python
+#: code:addons/payment_orkestapay/models/payment_transaction.py:0
+msgid ""
+"A refund of %(amount)s was made outside Odoo, e.g., in the OrkestaPay portal"
+" (transaction %(refund_id)s). No accounting entry was created; record it "
+"manually if needed."
+msgstr "Se hizo un reembolso de %(amount)s fuera de Odoo, por ejemplo, en el portal de OrkestaPay (transacción %(refund_id)s). No se creó ningún asiento contable; regístrelo manualmente si es necesario."
+
+#. module: payment_orkestapay
+#. odoo-python
+#: code:addons/payment_orkestapay/models/payment_transaction.py:0
+msgid "Canceled by the buyer in Odoo"
+msgstr "Cancelado por el comprador en Odoo"
+
+#. module: payment_orkestapay
+#: model:ir.model.fields,field_description:payment_orkestapay.field_payment_transaction__orkestapay_card_brand
+msgid "Card Brand"
+msgstr "Marca de la tarjeta"
+
+#. module: payment_orkestapay
+#: model:ir.model.fields,field_description:payment_orkestapay.field_payment_transaction__orkestapay_card_last_four
+msgid "Card Last 4 Digits"
+msgstr "Últimos 4 dígitos de la tarjeta"
+
+#. module: payment_orkestapay
+#: model:ir.model.fields,field_description:payment_orkestapay.field_payment_provider__orkestapay_client_id
+msgid "Client ID"
+msgstr "Client ID"
+
+#. module: payment_orkestapay
+#: model:ir.model.fields,field_description:payment_orkestapay.field_payment_provider__orkestapay_client_secret
+msgid "Client Secret"
+msgstr "Client Secret"
+
+#. module: payment_orkestapay
+#: model:ir.model.fields,field_description:payment_orkestapay.field_payment_provider__code
+msgid "Code"
+msgstr ""
+
+#. module: payment_orkestapay
+#. odoo-python
+#: code:addons/payment_orkestapay/models/payment_provider.py:0
+msgid "Connection failed (%(environment)s)"
+msgstr "Falló la conexión (%(environment)s)"
+
+#. module: payment_orkestapay
+#. odoo-python
+#: code:addons/payment_orkestapay/models/payment_provider.py:0
+msgid "Connection successful (%(environment)s)"
+msgstr "Conexión exitosa (%(environment)s)"
+
+#. module: payment_orkestapay
+#. odoo-python
+#: code:addons/payment_orkestapay/models/payment_provider.py:0
+msgid "Could not establish the connection to OrkestaPay."
+msgstr "No se pudo establecer la conexión con OrkestaPay."
+
+#. module: payment_orkestapay
+#: model:ir.model.fields,field_description:payment_orkestapay.field_payment_provider__display_name
+#: model:ir.model.fields,field_description:payment_orkestapay.field_payment_transaction__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: payment_orkestapay
+#. odoo-python
+#: code:addons/payment_orkestapay/models/payment_provider.py:0
+msgid "Enter the OrkestaPay Client ID and Client Secret first."
+msgstr "Primero capture el Client ID y el Client Secret de OrkestaPay."
+
+#. module: payment_orkestapay
+#: model:ir.model.fields,field_description:payment_orkestapay.field_payment_provider__id
+#: model:ir.model.fields,field_description:payment_orkestapay.field_payment_transaction__id
+msgid "ID"
+msgstr ""
+
+#. module: payment_orkestapay
+#: model_terms:ir.ui.view,arch_db:payment_orkestapay.payment_provider_form
+msgid ""
+"In the OrkestaPay portal, go to Developers → Webhooks → Add Endpoint, paste\n"
+"                        the webhook URL above and subscribe to the payment.* events. Then open the\n"
+"                        endpoint, copy its Signing Secret (whsec_...) and paste it in the Webhook\n"
+"                        Signing Secret field. The sandbox is used in Test Mode and production when\n"
+"                        Enabled."
+msgstr "En el portal de OrkestaPay, vaya a Desarrolladores → Webhooks → Add Endpoint, pegue la URL del webhook de arriba y suscríbase a los eventos payment.*. Después abra el endpoint, copie su Signing Secret (whsec_...) y péguelo en el campo Secreto de firma del webhook. En Modo de prueba se usa el sandbox, y en Habilitado, producción."
+
+#. module: payment_orkestapay
+#. odoo-python
+#: code:addons/payment_orkestapay/models/payment_transaction.py:0
+msgid "Order %s"
+msgstr "Pedido %s"
+
+#. module: payment_orkestapay
+#: model:ir.model.fields.selection,name:payment_orkestapay.selection__payment_provider__code__orkestapay
+#: model:payment.provider,name:payment_orkestapay.payment_provider_orkestapay
+msgid "OrkestaPay"
+msgstr ""
+
+#. module: payment_orkestapay
+#: model:ir.model.fields,field_description:payment_orkestapay.field_payment_provider__orkestapay_access_token
+msgid "OrkestaPay Access Token"
+msgstr "Token de acceso de OrkestaPay"
+
+#. module: payment_orkestapay
+#: model:ir.model.fields,field_description:payment_orkestapay.field_payment_transaction__orkestapay_checkout_id
+msgid "OrkestaPay Checkout ID"
+msgstr "ID del checkout de OrkestaPay"
+
+#. module: payment_orkestapay
+#: model:ir.model.fields,field_description:payment_orkestapay.field_payment_transaction__orkestapay_external_refund_ids
+msgid "OrkestaPay External Refund IDs"
+msgstr "IDs de reembolsos externos de OrkestaPay"
+
+#. module: payment_orkestapay
+#: model:ir.model.fields,field_description:payment_orkestapay.field_payment_transaction__orkestapay_last_reconcile_date
+msgid "OrkestaPay Last Reconciliation"
+msgstr "Última conciliación con OrkestaPay"
+
+#. module: payment_orkestapay
+#: model:ir.model.fields,field_description:payment_orkestapay.field_payment_transaction__orkestapay_payment_id
+msgid "OrkestaPay Payment ID"
+msgstr "ID del pago de OrkestaPay"
+
+#. module: payment_orkestapay
+#: model:ir.model.fields,field_description:payment_orkestapay.field_payment_provider__orkestapay_token_expiry
+msgid "OrkestaPay Token Expiry"
+msgstr "Vencimiento del token de OrkestaPay"
+
+#. module: payment_orkestapay
+#. odoo-python
+#: code:addons/payment_orkestapay/models/payment_transaction.py:0
+msgid ""
+"OrkestaPay did not confirm the refund %(refund)s; it was matched with the "
+"OrkestaPay refund %(refund_id)s of the same amount. Check it in the "
+"OrkestaPay portal."
+msgstr "OrkestaPay no confirmó el reembolso %(refund)s; se asoció con el reembolso %(refund_id)s de OrkestaPay por el mismo monto. Verifíquelo en el portal de OrkestaPay."
+
+#. module: payment_orkestapay
+#. odoo-python
+#: code:addons/payment_orkestapay/models/payment_transaction.py:0
+msgid ""
+"OrkestaPay did not confirm the refund. Check in the OrkestaPay portal "
+"whether the refund was made before trying again."
+msgstr "OrkestaPay no confirmó el reembolso. Antes de intentarlo de nuevo, verifique en el portal de OrkestaPay si el reembolso se realizó."
+
+#. module: payment_orkestapay
+#. odoo-python
+#: code:addons/payment_orkestapay/models/payment_transaction.py:0
+msgid ""
+"OrkestaPay only authorized this payment instead of charging it. Review the "
+"capture settings of the checkout in the OrkestaPay portal, then capture or "
+"cancel the payment there."
+msgstr "OrkestaPay solo autorizó este pago en lugar de cobrarlo. Revise la configuración de captura del checkout en el portal de OrkestaPay y después capture o cancele el pago ahí."
+
+#. module: payment_orkestapay
+#. odoo-python
+#: code:addons/payment_orkestapay/models/payment_transaction.py:0
+msgid "OrkestaPay refused the refund."
+msgstr "OrkestaPay rechazó el reembolso."
+
+#. module: payment_orkestapay
+#. odoo-python
+#: code:addons/payment_orkestapay/models/payment_provider.py:0
+msgid "OrkestaPay rejected the request: %(message)s"
+msgstr "OrkestaPay rechazó la solicitud: %(message)s"
+
+#. module: payment_orkestapay
+#. odoo-python
+#: code:addons/payment_orkestapay/models/payment_provider.py:0
+msgid "OrkestaPay returned an unexpected authentication response."
+msgstr "OrkestaPay devolvió una respuesta de autenticación inesperada."
+
+#. module: payment_orkestapay
+#: model:ir.actions.server,name:payment_orkestapay.cron_reconcile_pending_transactions_ir_actions_server
+msgid "OrkestaPay: Reconcile pending transactions"
+msgstr "OrkestaPay: conciliar transacciones pendientes"
+
+#. module: payment_orkestapay
+#: model:ir.model,name:payment_orkestapay.model_payment_provider
+msgid "Payment Provider"
+msgstr ""
+
+#. module: payment_orkestapay
+#: model:ir.model,name:payment_orkestapay.model_payment_transaction
+msgid "Payment Transaction"
+msgstr ""
+
+#. module: payment_orkestapay
+#. odoo-python
+#: code:addons/payment_orkestapay/models/payment_transaction.py:0
+msgid ""
+"Received an unknown refund status: %s. Check the refund in the OrkestaPay "
+"portal."
+msgstr "Se recibió un estado de reembolso desconocido: %s. Verifique el reembolso en el portal de OrkestaPay."
+
+#. module: payment_orkestapay
+#. odoo-python
+#: code:addons/payment_orkestapay/models/payment_transaction.py:0
+msgid "Received data with invalid order status: %s"
+msgstr "Se recibieron datos con un estado de orden no válido: %s"
+
+#. module: payment_orkestapay
+#. odoo-python
+#: code:addons/payment_orkestapay/models/payment_transaction.py:0
+msgid "Refund %(refund)s of %(payment)s"
+msgstr "Reembolso %(refund)s de %(payment)s"
+
+#. module: payment_orkestapay
+#. odoo-python
+#: code:addons/payment_orkestapay/models/payment_transaction.py:0
+msgid "Tax"
+msgstr "Impuesto"
+
+#. module: payment_orkestapay
+#: model_terms:ir.ui.view,arch_db:payment_orkestapay.payment_provider_form
+msgid "Test connection"
+msgstr "Probar conexión"
+
+#. module: payment_orkestapay
+#: model:ir.model.fields,help:payment_orkestapay.field_payment_provider__orkestapay_client_id
+msgid "The Client ID of your OrkestaPay API keys."
+msgstr "El Client ID de sus llaves del API de OrkestaPay."
+
+#. module: payment_orkestapay
+#: model:ir.model.fields,help:payment_orkestapay.field_payment_provider__orkestapay_client_secret
+msgid "The Client Secret of your OrkestaPay API keys."
+msgstr "El Client Secret de sus llaves del API de OrkestaPay."
+
+#. module: payment_orkestapay
+#. odoo-python
+#: code:addons/payment_orkestapay/models/payment_provider.py:0
+msgid "The OrkestaPay credentials are valid."
+msgstr "Las credenciales de OrkestaPay son válidas."
+
+#. module: payment_orkestapay
+#. odoo-python
+#: code:addons/payment_orkestapay/models/payment_transaction.py:0
+msgid "The OrkestaPay order does not match the transaction."
+msgstr "La orden de OrkestaPay no corresponde a la transacción."
+
+#. module: payment_orkestapay
+#. odoo-python
+#: code:addons/payment_orkestapay/models/payment_transaction.py:0
+msgid "The OrkestaPay order is %(status)s."
+msgstr "La orden de OrkestaPay está en estado %(status)s."
+
+#. module: payment_orkestapay
+#. odoo-python
+#: code:addons/payment_orkestapay/models/payment_transaction.py:0
+msgid ""
+"The OrkestaPay payment of transaction %s is unknown; refund it from the "
+"OrkestaPay portal."
+msgstr "Se desconoce el pago de OrkestaPay de la transacción %s; reembólselo desde el portal de OrkestaPay."
+
+#. module: payment_orkestapay
+#: model:ir.model.fields,help:payment_orkestapay.field_payment_provider__orkestapay_webhook_secret
+msgid ""
+"The Signing Secret (whsec_...) of the webhook endpoint registered in the "
+"OrkestaPay portal."
+msgstr "El Signing Secret (whsec_...) del endpoint de webhook registrado en el portal de OrkestaPay."
+
+#. module: payment_orkestapay
+#: model:ir.model.fields,help:payment_orkestapay.field_payment_provider__orkestapay_webhook_url
+msgid "The URL to register as a webhook endpoint in the OrkestaPay portal."
+msgstr "La URL que debe registrar como endpoint de webhook en el portal de OrkestaPay."
+
+#. module: payment_orkestapay
+#. odoo-python
+#: code:addons/payment_orkestapay/models/payment_transaction.py:0
+msgid ""
+"The payment is being updated by OrkestaPay; try the refund again in a "
+"moment."
+msgstr "OrkestaPay está actualizando el pago; intente el reembolso de nuevo en un momento."
+
+#. module: payment_orkestapay
+#. odoo-python
+#: code:addons/payment_orkestapay/models/payment_transaction.py:0
+msgid "The payment was declined."
+msgstr "El pago fue rechazado."
+
+#. module: payment_orkestapay
+#: model:ir.model.fields,help:payment_orkestapay.field_payment_provider__code
+msgid "The technical code of this payment provider."
+msgstr ""
+
+#. module: payment_orkestapay
+#. odoo-python
+#: code:addons/payment_orkestapay/models/payment_transaction.py:0
+msgid "The transaction %s has no OrkestaPay order."
+msgstr "La transacción %s no tiene una orden de OrkestaPay."
+
+#. module: payment_orkestapay
+#. odoo-python
+#: code:addons/payment_orkestapay/models/payment_transaction.py:0
+msgid ""
+"We could not start the payment with OrkestaPay. Please try again or choose "
+"another payment method."
+msgstr "No pudimos iniciar el pago con OrkestaPay. Intente de nuevo o elija otro método de pago."
+
+#. module: payment_orkestapay
+#: model:ir.model.fields,field_description:payment_orkestapay.field_payment_provider__orkestapay_webhook_secret
+msgid "Webhook Signing Secret"
+msgstr "Secreto de firma del webhook"
+
+#. module: payment_orkestapay
+#: model:ir.model.fields,field_description:payment_orkestapay.field_payment_provider__orkestapay_webhook_url
+msgid "Webhook URL"
+msgstr "URL del webhook"
+
+#. module: payment_orkestapay
+#: model_terms:payment.provider,auth_msg:payment_orkestapay.payment_provider_orkestapay
+msgid "Your payment has been authorized."
+msgstr "Se autorizó su pago."
+
+#. module: payment_orkestapay
+#: model_terms:payment.provider,cancel_msg:payment_orkestapay.payment_provider_orkestapay
+msgid "Your payment has been cancelled."
+msgstr "Se canceló su pago."
+
+#. module: payment_orkestapay
+#: model_terms:payment.provider,pending_msg:payment_orkestapay.payment_provider_orkestapay
+msgid "Your payment has been processed but is waiting for approval."
+msgstr "Su pago fue procesado, pero está en espera de aprobación."
+
+#. module: payment_orkestapay
+#: model_terms:payment.provider,done_msg:payment_orkestapay.payment_provider_orkestapay
+msgid "Your payment has been processed."
+msgstr "Su pago fue procesado."
+
+#. module: payment_orkestapay
+#. odoo-python
+#: code:addons/payment_orkestapay/models/payment_provider.py:0
+msgid "production"
+msgstr "producción"
+
+#. module: payment_orkestapay
+#. odoo-python
+#: code:addons/payment_orkestapay/models/payment_provider.py:0
+msgid "sandbox"
+msgstr "sandbox"
+
+#. module: payment_orkestapay
+#: model_terms:ir.ui.view,arch_db:payment_orkestapay.payment_provider_form
+msgid "whsec_..."
+msgstr ""
