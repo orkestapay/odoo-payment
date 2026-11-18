@@ -1,7 +1,7 @@
 # Part of payment_orkestapay. See LICENSE file for full copyright and licensing details.
 {
     'name': "OrkestaPay Payment Provider",
-    'version': '19.0.1.0.0',
+    'version': '19.0.1.0.1',
     'category': 'Accounting/Payment Providers',
     'sequence': 350,
     'summary': "Accept card payments in your Odoo shop with the OrkestaPay hosted checkout.",
