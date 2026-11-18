@@ -24,7 +24,7 @@ PROVIDER_LOGGERS = (
 def _response(status_code=200, payload=None, url='https://api.sand.orkestapay.com/'):
     response = requests.Response()
     response.status_code = status_code
-    response.reason = 'OK' if status_code < 400 else 'Error'
+    response.reason = 'OK' if status_code < 300 else 'Redirect' if status_code < 400 else 'Error'
     response.url = url
     response._content = json.dumps(payload).encode() if payload is not None else b''
     return response
@@ -187,6 +187,37 @@ class TestOrkestaPayProvider(OrkestaPayCommon):
             self.provider._send_api_request('GET', '/v1/orders/ord_1')
         self.assertTrue(error.exception.is_network_error)
         self.assertTrue(error.exception.is_retryable)
+
+    def test_requests_do_not_follow_redirects(self):
+        with self._mock_http(_token_response(), _response(200, {})) as request:
+            self.provider._send_api_request('GET', '/v1/orders/ord_1')
+        self.assertEqual(request.call_count, 2)  # Token, then the API call.
+        for call in request.call_args_list:
+            self.assertIs(call.kwargs.get('allow_redirects'), False)
+
+    @staticmethod
+    def _redirect_response(location):
+        response = _response(307)
+        response.headers['Location'] = location
+        return response
+
+    @mute_logger(*PROVIDER_LOGGERS)
+    def test_api_redirect_is_an_error(self):
+        redirect = self._redirect_response('https://example.com/v1/orders/ord_1')
+        with self._mock_http(_token_response(), redirect) as request, \
+                self.assertRaises(OrkestaPayApiError) as error:
+            self.provider._send_api_request('GET', '/v1/orders/ord_1')
+        self.assertEqual(error.exception.status_code, 307)
+        self.assertEqual(request.call_count, 2)  # Token, then the API call; no retry.
+
+    @mute_logger(*PROVIDER_LOGGERS)
+    def test_token_redirect_is_an_error(self):
+        redirect = self._redirect_response('https://example.com/v1/oauth/tokens')
+        with self._mock_http(redirect) as request, \
+                self.assertRaises(OrkestaPayApiError) as error:
+            self.provider._send_api_request('GET', '/v1/orders/ord_1')
+        self.assertEqual(error.exception.status_code, 307)
+        self.assertEqual(request.call_count, 1)  # The client secret isn't sent anywhere else.
 
     def test_api_error_is_parsed_and_logged_with_request_id(self):
         error_body = {

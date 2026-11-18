@@ -456,6 +456,23 @@ class TestCheckoutCreation(OrkestaPayCommon):
         self.assertTrue(processing_values['state_message'])
 
     @mute_logger(TX_LOGGER)
+    def test_untrusted_checkout_url_sets_the_transaction_in_error(self):
+        for index, url in enumerate((
+            'https://example.com/chk_1',
+            'https://[bad/chk_1',  # Malformed.
+            {'url': 'https://checkout.sand.orkestapay.com/chk_1'},  # Not a string.
+        )):
+            with self.subTest(url=url):
+                tx = self._create_transaction(
+                    flow='redirect', reference=f'{self.reference}-{index}'
+                )
+                with self._mock_api({'POST /v1/checkouts': self._checkout_response(url)}):
+                    processing_values = tx._get_processing_values()
+                self.assertEqual(tx.state, 'error')
+                self.assertEqual(processing_values['state'], 'error')
+                self.assertFalse(tx.provider_reference)
+
+    @mute_logger(TX_LOGGER)
     def test_checkout_timeout_sets_the_transaction_in_error(self):
         tx = self._create_transaction(flow='redirect')
         with self._mock_api({
