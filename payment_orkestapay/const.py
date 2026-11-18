@@ -11,6 +11,10 @@ API_URL_DISABLED_FALLBACK = API_URLS['test']
 # HTTP timeout, in seconds, for every call to the OrkestaPay API.
 REQUEST_TIMEOUT = 10
 
+# Domain the hosted checkout must be served from (e.g. checkout.sand.orkestapay.com): the buyer is
+# only redirected to an HTTPS URL of this domain or one of its subdomains.
+CHECKOUT_DOMAIN = 'orkestapay.com'
+
 # OAuth `client_credentials` token endpoint and the margin, in seconds, before expiry under which
 # a cached token is renewed.
 TOKEN_ENDPOINT = '/v1/oauth/tokens'

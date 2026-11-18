@@ -15,7 +15,7 @@ from odoo.tools.urls import urljoin
 from odoo.addons.payment import utils as payment_utils
 from odoo.addons.payment.logging import get_payment_logger
 from odoo.addons.payment_orkestapay import const
-from odoo.addons.payment_orkestapay.utils import OrkestaPayApiError
+from odoo.addons.payment_orkestapay.utils import OrkestaPayApiError, is_checkout_url
 
 
 _logger = get_payment_logger(__name__, sensitive_keys=const.SENSITIVE_KEYS)
@@ -99,7 +99,14 @@ class PaymentTransaction(models.Model):
                     checkout = None
 
         order_id = (checkout or {}).get('order', {}).get('order_id')
-        if not (checkout and checkout.get('checkout_redirect_url') and order_id):
+        redirect_url = (checkout or {}).get('checkout_redirect_url')
+        if redirect_url and not is_checkout_url(redirect_url):
+            _logger.error(
+                "OrkestaPay returned a checkout URL outside %s for transaction %s; not redirecting"
+                " the buyer.", const.CHECKOUT_DOMAIN, self.reference,
+            )
+            redirect_url = None
+        if not (redirect_url and order_id):
             _logger.error(
                 "Could not create the OrkestaPay checkout of transaction %s.", self.reference
             )
@@ -880,7 +887,7 @@ class PaymentTransaction(models.Model):
                 # 500 instead of the original response (seen in sandbox): still unknown. Any error
                 # of the retry, a 4xx included, is treated as unknown for the same reason.
                 if not (error.is_retryable or outcome_unknown):
-                    raise  # Rejected (4xx): nothing was refunded.
+                    raise  # Rejected (4xx, or an unexpected redirect): nothing was refunded.
                 outcome_unknown = True
                 if attempt == 1:
                     _logger.warning(

@@ -228,6 +228,8 @@ class PaymentProvider(models.Model):
                 },
                 headers={'Accept': 'application/json', 'Content-Type': 'application/json'},
                 timeout=const.REQUEST_TIMEOUT,
+                # A redirect would resend the client secret to wherever it points.
+                allow_redirects=False,
             )
         except (requests.exceptions.ConnectionError, requests.exceptions.Timeout):
             _logger.warning(
@@ -238,7 +240,7 @@ class PaymentProvider(models.Model):
                 is_network_error=True,
             ) from None
 
-        if not response.ok:
+        if response.status_code >= 300:  # Errors, and redirects, which aren't followed.
             raise self._orkestapay_build_api_error(response)
 
         try:
@@ -335,7 +337,7 @@ class PaymentProvider(models.Model):
             try:
                 response = requests.request(
                     method, url, params=params, data=data, json=json, headers=headers,
-                    timeout=const.REQUEST_TIMEOUT,
+                    timeout=const.REQUEST_TIMEOUT, allow_redirects=False,
                 )
             except (requests.exceptions.ConnectionError, requests.exceptions.Timeout):
                 _logger.warning(
@@ -350,7 +352,7 @@ class PaymentProvider(models.Model):
             if response.status_code == 401 and attempt == 1:
                 _logger.info("OrkestaPay rejected the access token; retrying with a new one.")
                 continue
-            if not response.ok:
+            if response.status_code >= 300:  # Errors, and redirects: the API never redirects.
                 raise self._orkestapay_build_api_error(response, reference=reference)
             return self._parse_response_content(response, **kwargs)
         return None  # Unreachable: the second attempt either returns or raises.

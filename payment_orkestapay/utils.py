@@ -6,6 +6,7 @@ import hashlib
 import hmac
 import re
 import time
+from urllib.parse import urlsplit
 
 from odoo.exceptions import ValidationError
 
@@ -123,3 +124,38 @@ def verify_svix_signature(secret, headers, raw_body, now=None):
         if hmac.compare_digest(expected_signature, signature.encode()):
             return
     raise WebhookVerificationError("no matching signature")
+
+
+# Characters a checkout URL can't contain: anything but printable ASCII, and backslashes, which
+# browsers read as `/`.
+_CHECKOUT_URL_FORBIDDEN_CHARS = re.compile(r'[^\x21-\x7e]|\\')
+
+
+def is_checkout_url(url):
+    """Return whether the buyer can be redirected to the given checkout URL.
+
+    The URL comes from the API response. Only plain HTTPS URLs of the OrkestaPay domain or its
+    subdomains are accepted, so that a tampered response can't send the buyer to pay elsewhere:
+    no credentials, other ports, percent-encoded hosts, backslashes (browsers read them as `/`),
+    spaces, control or non-ASCII characters.
+
+    :param str url: The checkout URL returned by the API.
+    :return: Whether the buyer can be redirected to the URL.
+    :rtype: bool
+    """
+    if not isinstance(url, str) or _CHECKOUT_URL_FORBIDDEN_CHARS.search(url):
+        return False
+    try:
+        parts = urlsplit(url)
+        port = parts.port
+    except ValueError:  # E.g., an invalid IPv6 host or port.
+        return False
+    host = (parts.hostname or '').lower()
+    return (
+        parts.scheme == 'https'
+        and parts.username is None
+        and parts.password is None
+        and port in (None, 443)
+        and '%' not in parts.netloc
+        and (host == const.CHECKOUT_DOMAIN or host.endswith(f'.{const.CHECKOUT_DOMAIN}'))
+    )
