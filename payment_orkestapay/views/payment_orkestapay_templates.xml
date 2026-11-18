@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="redirect_form">
+        <!-- The checkout URL is unique per transaction. A GET form drops the query string of its
+             action, so its parameters are sent as hidden inputs. -->
+        <form t-att-action="api_url" method="get">
+            <t t-foreach="url_params or {}" t-as="param">
+                <input type="hidden" t-att-name="param" t-att-value="url_params[param]"/>
+            </t>
+        </form>
+    </template>
+</odoo>
