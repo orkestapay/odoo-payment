@@ -7,7 +7,9 @@
     'summary': "Accept card payments in your Odoo shop with the OrkestaPay hosted checkout.",
     'author': "OrkestaPay",
     'website': "https://orkestapay.com",
+    'support': "support@orkestapay.com",
     'license': 'LGPL-3',
+    'images': ['static/description/banner.png'],
     'depends': ['payment'],
     'data': [
         'views/payment_orkestapay_templates.xml',

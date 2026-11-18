@@ -29,7 +29,7 @@ En Odoo.sh, agrégalo como submódulo de tu repositorio en la rama `19.0`.
 Necesitas una cuenta de OrkestaPay y sus llaves del API (portal → *Desarrolladores → Llaves
 del API*). Para probar, usa las del **sandbox**.
 
-1. *Facturación (o Sitio web) → Configuración → Proveedores de pago → OrkestaPay*.
+1. *Sitio web → Configuración → Proveedores de pago → OrkestaPay* (o *Facturación → Configuración → Pagos en línea → Proveedores de pago*).
 2. Pestaña *Credenciales*: captura `Client ID` y `Client Secret`, y pulsa **Probar
    conexión**.
 3. Copia la *URL del webhook* que muestra el formulario y regístrala en el portal de

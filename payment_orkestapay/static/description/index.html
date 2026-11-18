@@ -1,0 +1,120 @@
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <div class="text-center">
+            <h2 class="oe_slogan" style="color: #1868c6;">Accept card payments in your Odoo shop</h2>
+            <h3 class="oe_slogan">
+                Your customers pay on the secure OrkestaPay hosted checkout and come back to a
+                confirmed order. Card data never touches your Odoo.
+            </h3>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h3 class="text-center" style="color: #1868c6;">Features</h3>
+        <div class="row">
+            <div class="col-md-6">
+                <ul>
+                    <li>
+                        <b>Hosted checkout:</b> the buyer enters the card on OrkestaPay, with 3D
+                        Secure handled for you.
+                    </li>
+                    <li><b>MXN and USD</b>, with the order itemized (products, taxes, shipping and discounts) when it comes from a sales order; otherwise a single line with the total.</li>
+                    <li><b>Checkout in Spanish or English:</b> Spanish for buyers browsing your website in Spanish (or with a Spanish contact language), English otherwise.</li>
+                    <li>
+                        <b>Reliable confirmation:</b> the payment state is always checked with the
+                        OrkestaPay API, from the buyer's return, signed webhooks and a reconciliation
+                        job every 15 minutes.
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <ul>
+                    <li><b>Full and partial refunds</b> from the Odoo payment, with no duplicates on retries.</li>
+                    <li><b>Traceability:</b> OrkestaPay order and payment IDs, card brand and last 4 digits on the transaction.</li>
+                    <li><b>Sandbox</b> in Test Mode and production when Enabled, with a connection test.</li>
+                    <li><b>No extra Python dependencies</b>; works on Community and Enterprise.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h3 class="text-center" style="color: #1868c6;">The buyer pays on OrkestaPay</h3>
+        <p class="text-center">OrkestaPay appears with the other payment methods of your shop.</p>
+        <div class="text-center">
+            <img src="screenshot_checkout.png" alt="Payment step of the Odoo shop" class="img-fluid img-thumbnail"/>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h3 class="text-center" style="color: #1868c6;">Configuration</h3>
+        <p>
+            Requirements: Odoo 19 and an OrkestaPay account with its API keys (Client ID and
+            Client Secret).
+        </p>
+        <ol>
+            <li>Install the module.</li>
+            <li>Open <b>Website → Configuration → Payment Providers → OrkestaPay</b> (or <b>Invoicing / Accounting → Configuration → Online Payments → Payment Providers</b>).</li>
+            <li>Enter the <b>Client ID</b> and <b>Client Secret</b>, then click <b>Test connection</b>.</li>
+            <li>
+                Copy the <b>Webhook URL</b>. In the OrkestaPay portal, go to Developers → Webhooks →
+                Add Endpoint, paste it and subscribe to the payment.* events. Then copy the endpoint's
+                Signing Secret into the <b>Webhook Signing Secret</b> field.
+            </li>
+            <li>Set the provider to <b>Test Mode</b> and make a test payment with the card 4111 1111 1111 1111.</li>
+            <li>Set it to <b>Enabled</b> and publish it to start charging.</li>
+        </ol>
+        <div class="text-center">
+            <img src="screenshot_provider.png" alt="OrkestaPay payment provider settings" class="img-fluid img-thumbnail"/>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h3 class="text-center" style="color: #1868c6;">Every payment, traceable</h3>
+        <div class="text-center">
+            <img src="screenshot_transaction.png" alt="Payment transaction with the OrkestaPay details" class="img-fluid img-thumbnail"/>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h3 class="text-center" style="color: #1868c6;">Data sent to OrkestaPay</h3>
+        <p>
+            To create the checkout, Odoo sends the order reference, amount and currency; when the
+            order can be itemized, the order lines (product name, internal reference, quantity,
+            price and taxes), shipping and discounts; the buyer's name, email and country, and
+            their phone and addresses when available; technical identifiers (Odoo transaction id,
+            sales order number, customer id in Odoo, database identifier and module version); and
+            the return URLs to your Odoo. Card data is entered only on the OrkestaPay checkout and
+            is never stored or processed by Odoo.
+        </p>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h3 class="text-center" style="color: #1868c6;">Support</h3>
+        <p class="text-center">
+            Write to <a href="mailto:support@orkestapay.com">support@orkestapay.com</a> or see the
+            <a href="https://docs.orkestapay.com" target="_blank" rel="noopener">OrkestaPay documentation</a>.
+        </p>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h3 class="text-center" style="color: #1868c6;">Changelog</h3>
+        <ul>
+            <li><b>19.0.1.0.0:</b> first release.</li>
+        </ul>
+    </div>
+</section>
