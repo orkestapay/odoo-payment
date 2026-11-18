@@ -35,6 +35,12 @@ repos:
 
   - repo: local
     hooks:
+      - id: description-ascii
+        name: Apps Store description is ASCII only
+        # The Apps Store doesn't read the page as UTF-8: use HTML entities (e.g. &#8594;).
+        language: pygrep
+        entry: "[^\\x00-\\x7F]"
+        files: ^payment_orkestapay/static/description/index\.html$
       - id: prettier-xml
         name: prettier (XML)
         language: node
